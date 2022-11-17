@@ -18,9 +18,8 @@ endfunction
 
 " Check fold depth of a line.
 function org#fold_expr()
-    let l:depth = match(getline(v:lnum), '\(^\*\+\)\@<=\( .*$\)\@=')
-    if l:depth > 0 && synIDattr(synID(v:lnum, 1, 1), 'name') =~# '\m^o\(rg\|utline\)Heading'
-        return ">" . l:depth
-    endif
-    return "="
+    let l:depth = match(getline(v:lnum), '^\*\+\zs ')
+    return l:depth > 0 && synIDattr(synID(v:lnum, 1, 1), 'name') =~# '\m^o\(rg\|utline\)Heading'
+    \ ? ">" . l:depth
+    \ : "="
 endfunction
